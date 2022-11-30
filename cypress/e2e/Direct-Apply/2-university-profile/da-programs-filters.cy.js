@@ -2,6 +2,7 @@
 import po_uni_profile from "../PageObjects/po_uni_profile"
 import po_pro_filters from "../PageObjects/po_pro_filters"
 import { get } from "lodash";
+//import { first } from "cypress/types/lodash";
 
 
 describe('Apply Program Filters on University DA Section', () => {
@@ -66,5 +67,13 @@ describe('Apply Program Filters on University DA Section', () => {
         cy.wait(3000)
         university.getProgramName().contains(' Accountancy BS - Accountancy & Information ')
           .should('be.visible')
+      })
+
+      it('Search Program from Listing', () => {
+        filters.getInputField().first().type('Computer Science')
+        cy.wait(2000)
+
+        university.getProgramName().contains('Computer Science (G402)')
+
       })
 })

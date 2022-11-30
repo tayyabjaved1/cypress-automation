@@ -6,5 +6,9 @@ class program_filters {
     getCheckBox() {
         return cy.get('input[type=checkbox]')
     }
+
+    getInputField() {
+        return cy.get('input[type=text]')
+    }
 }
 export default program_filters
