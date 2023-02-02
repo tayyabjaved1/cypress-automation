@@ -12,7 +12,6 @@ describe('Signup Tests', () => {
       failOnStatusCode: false,
       headers: {
         'Content-Type': 'application/json',
-        'access_token': 'Zx2EE58K0tyzL8V4Xh7GLYYhQzHcz7Q05jrRXAcfw1',
         'locale': 'eng-US',
         'User-Agent': 'wTRGdmtTaDUzdCDD',
         'platform': 'web'
@@ -25,7 +24,6 @@ describe('Signup Tests', () => {
           last_name: l_name,
           email: email,
           gender: gender,
-         // "mobile":"{{phone}}",
           "device_info":
           {
               "platform":"web"
@@ -39,14 +37,11 @@ describe('Signup Tests', () => {
       if (response.status === 200){
         expect(response.body.status.details.user).to.have.property('last_name', l_name)
       }
-     //expect(response.body).to.have.property('email', expectedValue)
-
     })
   }
 
   it('Verify the response when the student is signed up successfully', () => {
     signup('Tayyab', randomString(), randomEmail, 'Test1234', 'M', 200, 'OK')
-    //cy.wait(15000)
   })
 
   it('Should return 422 status code for missing required information including "Password", "Email", "LastName" ', () => {
