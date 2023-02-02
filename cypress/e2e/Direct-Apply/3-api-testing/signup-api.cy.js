@@ -35,7 +35,10 @@ describe('Signup Tests', () => {
     }).then(response => {
       expect(response.status).to.eq(expectedStatus)
       expect(response.body.status).to.have.property('message', expectedMessage)
-      expect(response.body.status.details.user).to.have.property('last_name', l_name)
+
+      if (response.status === 200){
+        expect(response.body.status.details.user).to.have.property('last_name', l_name)
+      }
      //expect(response.body).to.have.property('email', expectedValue)
 
     })
