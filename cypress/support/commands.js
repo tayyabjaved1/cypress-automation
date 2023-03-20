@@ -31,3 +31,12 @@ Cypress.Commands.add('signIn', (user) =>{
     cy.get('[type=submit]').contains('Sign In').click()
     cy.wait(10000)
 })
+
+// Adding Custom Command for Handling Windows, Tabs & ALerts //
+Cypress.Commands.add("stubWindowOpen", (url) => {
+    cy.window().then((win) => {
+      cy.stub(win, "open", () => {
+        win.location.href = url
+      }).as('newTab')
+    })
+  })

@@ -24,18 +24,23 @@ describe('Check New Tabs Functionality', () => {
     cy.url().should('eq','https://demoqa.com/links')
   })
   
-  // Handling tab that don't have "target=_blank" in it //
+  // Handling tab that don't have "target=_blank" in it using custom command //
   it('Handling new Browser Tab', function () {
     cy.visit('https://demoqa.com/browser-windows')
-    cy.window().then((TestTab) => { // Tabwin is parameter of function
-      cy.stub(TestTab, 'open', url => {
-        TabWin.location.href = 'https://demoqa.com/sample';
-      }).as("newtab")
-    })
+
+    // code is commented because of using custom command but you can take concept how to add window.open and stub method //
+    // cy.window().then((TestTab) => { // Tabwin is parameter of function
+    //   cy.stub(TestTab, 'open', url => {
+    //     TabWin.location.href = 'https://demoqa.com/sample';
+    //   }).as("newtab")
+    // })
+    
+    // used custom command here to handle new tab that is getting called from commands.js file //
+    cy.stubWindowOpen('https://demoqa.com/sample')
     cy.get('#tabButton').click()
 
     //checking that above stubed window.open method is called or not //
-    cy.get('@newtab').should("be.called")
+    cy.get('@newTab').should("be.called")
     cy.get('h1').should('have.text', 'This is a sample page')
     cy.wait(3000)
     cy.go('back')
@@ -43,7 +48,7 @@ describe('Check New Tabs Functionality', () => {
     cy.url().should('eq','https://demoqa.com/browser-windows')
   })
 
-  // Other way to Handling tab that don't have "target=_blank" in it with cy.wrap method //
+  // Other way to Handling tab that don't have "target=_blank" in it with cy.wrap method without using custom command //
   it('should handle new tab', () => {
     cy.visit('https://demoqa.com/browser-windows')  
     cy.window().then((win) => {

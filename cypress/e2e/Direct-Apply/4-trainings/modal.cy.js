@@ -5,7 +5,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false
   })
 
-describe('New Browser window to open', () => {
+describe('Checking for Modal Handling', () => {
     it('Checking Small Modal with Cypress', () => {
         cy.visit('https://demoqa.com/modal-dialogs')
         
