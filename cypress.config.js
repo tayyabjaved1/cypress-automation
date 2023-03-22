@@ -8,6 +8,7 @@ module.exports = defineConfig({
     },
     baseUrl: 'https://companion-test.cialfo.sg/',
     viewportWidth: 1536,
-    viewportHeight: 960
+    viewportHeight: 960,
+    //chromeWebSecurity: false
   },
 });

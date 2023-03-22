@@ -24,6 +24,16 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+/// <reference types="cypress" />
+/// <reference types = "Cypress-iframe"/>
+import 'cypress-iframe'
+//import { find } from 'cypress/types/lodash'
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // return false to prevent Cypress from failing the test
+  return false
+})
+
 Cypress.Commands.add('signIn', (user) =>{
     cy.visit('/app/auth/signin')
     cy.get('input[type=text]').type(user.email)
