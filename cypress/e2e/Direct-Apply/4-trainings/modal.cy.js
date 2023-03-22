@@ -1,10 +1,3 @@
-/// <reference types="cypress" />
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // return false to prevent Cypress from failing the test
-    return false
-  })
-
 describe('Checking for Modal Handling', () => {
     it('Checking Small Modal with Cypress', () => {
         cy.visit('https://demoqa.com/modal-dialogs')
