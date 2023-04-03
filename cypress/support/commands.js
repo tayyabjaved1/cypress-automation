@@ -24,6 +24,16 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+/// <reference types="cypress" />
+/// <reference types = "Cypress-iframe"/>
+import 'cypress-iframe'
+//import { find } from 'cypress/types/lodash'
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // return false to prevent Cypress from failing the test
+  return false
+})
+
 Cypress.Commands.add('signIn', (user) =>{
     cy.visit('/app/auth/signin')
     cy.get('input[type=text]').type(user.email)
@@ -31,3 +41,12 @@ Cypress.Commands.add('signIn', (user) =>{
     cy.get('[type=submit]').contains('Sign In').click()
     cy.wait(10000)
 })
+
+// Adding Custom Command for Handling Windows, Tabs & ALerts //
+Cypress.Commands.add("stubWindowOpen", (url) => {
+    cy.window().then((win) => {
+      cy.stub(win, "open", () => {
+        win.location.href = url
+      }).as('newTab')
+    })
+  })
