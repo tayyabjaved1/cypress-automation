@@ -37,4 +37,24 @@ describe('Handling Iframe with Cypress', () => {
            .its('0.contentDocument.body')
            .contains('Child Iframe')
     })
+
+    // drag & drop in iframes //
+    it('Iframe Handling for Cross Origin URLs in Frame', () => {
+        cy.visit('https://www.globalsqa.com/demo-site/draganddrop/')
+        .wait(1000)
+        cy.get('.resp-tab-item')
+        .contains('Accepted Elements')
+        .should('be.visible')
+        .click()
+        .wait(3000)
+
+        cy.frameLoaded('.resp-tab-content-active iframe')
+        // cy.iframe('.resp-tab-content-active iframe').find('#draggable').move('#droppable', {force: true})
+        cy.iframe('.resp-tab-content-active iframe')
+        .find('#draggable')
+        .trigger('mousedown', { which: 1, pageX: 100, pageY: 100 })
+        .trigger('mousemove', { which: 1, pageX: 250, pageY: 100 })
+        .trigger('mouseup')
+        .wait(3000)
+    })
 })
