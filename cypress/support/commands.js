@@ -27,6 +27,7 @@
 /// <reference types="cypress" />
 /// <reference types = "Cypress-iframe"/>
 import 'cypress-iframe'
+import '@4tw/cypress-drag-drop'
 //import { find } from 'cypress/types/lodash'
 
 Cypress.on('uncaught:exception', (err, runnable) => {

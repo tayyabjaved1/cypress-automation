@@ -9,6 +9,7 @@
   "author": "Tayyab Javed",
   "license": "ISC",
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.3",
     "cypress": "^10.11.0"
   },
   "dependencies": {
