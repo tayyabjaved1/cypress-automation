@@ -9,7 +9,8 @@
   "author": "Tayyab Javed",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^10.11.0"
+    "cypress": "^10.11.0",
+    "cypress-mochawesome-reporter": "^3.3.0"
   },
   "dependencies": {
     "cypress-iframe": "^1.0.1"
