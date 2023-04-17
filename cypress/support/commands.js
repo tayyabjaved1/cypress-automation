@@ -30,6 +30,10 @@ import 'cypress-iframe'
 import '@4tw/cypress-drag-drop'
 //import { find } from 'cypress/types/lodash'
 
+// importing page objects files here //
+import po_homepage from "/cypress/e2e/PageObjects/po_homepage.js"
+import po_signup from "/cypress/e2e/PageObjects/po_signup"
+
 Cypress.on('uncaught:exception', (err, runnable) => {
   // return false to prevent Cypress from failing the test
   return false
