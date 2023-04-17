@@ -50,4 +50,35 @@ Cypress.Commands.add("stubWindowOpen", (url) => {
         win.location.href = url
       }).as('newTab')
     })
+  })  
+
+  Cypress.Commands.add('verifyTableRowData', (tableSelector, columnIndex, columnValue) => {
+    let matchFound = false
+    cy.get(tableSelector)
+      .find('tbody tr')
+      .each(($row) => {
+        const rowColumn1 = $row.find(`td:nth-child(${columnIndex[0]})`).text()
+        if (rowColumn1 === columnValue[0]) {
+          const rowColumn2 = $row.find(`td:nth-child(${columnIndex[1]})`).text()
+          const rowColumn3 = $row.find(`td:nth-child(${columnIndex[2]})`).text()
+  
+          expect(rowColumn2).to.equal(columnValue[1])
+          expect(rowColumn3).to.equal(columnValue[2])
+          matchFound = true
+        }
+      })
+      .then(() => {
+        expect(matchFound).to.be.true
+      })
   })
+
+  Cypress.Commands.add('clearLogs', () => {
+    cy.window().then((win) => {
+      const cypressConsole = win.console._commandLineAPI
+      if (cypressConsole) {
+        cypressConsole.clear()
+      }
+    })
+  })
+  
+  
