@@ -39,8 +39,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false
 })
 
-Cypress.Commands.add('signIn', (user) =>{
-    cy.visit('/app/auth/signin')
+Cypress.Commands.add('login', (user) =>{
+    cy.visit('/signin')
     cy.get('input[type=text]').type(user.email)
     cy.get('input[type=password').type(user.password)
     cy.get('[type=submit]').contains('Sign In').click()

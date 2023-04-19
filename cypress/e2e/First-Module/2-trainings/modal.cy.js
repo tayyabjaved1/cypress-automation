@@ -1,5 +1,5 @@
 describe('Checking for Modal Handling', () => {
-    it('Checking Small Modal with Cypress', () => {
+    it('(GOD-TC-202) Checking Small Modal with Cypress', () => {
         cy.visit('https://demoqa.com/modal-dialogs')
         
         // click on Modal //

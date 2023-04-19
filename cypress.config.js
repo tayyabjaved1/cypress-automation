@@ -3,11 +3,12 @@ const { registerAIOTestsPlugin } = require('cypress-aiotests-reporter/src')
 const { beforeRunHook, afterRunHook } = require('cypress-mochawesome-reporter/lib');
 
 module.exports = defineConfig({
-  projectId: 'vc6i9w',
+  projectId: 'add cypress dashboard project ID',
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     charts: true,
-    reportPageTitle: 'Automation-Report',
+    reportDir: "cypress/reports/mochawesome-report",
+    reportPageTitle: 'Test-Automation-Report',
     embeddedScreenshots: true,
     inlineAssets: true,
     saveAllAttempts: false,
@@ -15,19 +16,18 @@ module.exports = defineConfig({
     code: false,
     autoOpen: false,
     overwrite: false,
-    mochaFile: 'results/my-test-output.xml'
   },
   env: {
     "aioTests": {
       "enableReporting": true,
       "cloud": { //Replace with server authentication if using Jira Server
-        "apiKey": "OTM2ZWM3YmMtNGZhZi00OWFkLTg0ZDAtMzM0NzZkMDk1Mjcx"
+        "apiKey": "your AIO project Key"
       },
-      "jiraProjectId": "10051", // Jira Project ID for Godspeed is 10051 //
+      "jiraProjectId": "Your Jira project ID", // Jira Project ID for Godspeed is 10051 //
       "cycleDetails": {
         "createNewCycle": false,
         "cycleName": "Cypress Test Cyle Run on AIO",
-        "cycleKey": "GOD-CY-89"
+        "cycleKey": "Your AIO Cycle ID"
       },
       "addNewRun": true,
       "addAttachmentToFailedCases": true,
@@ -38,10 +38,19 @@ module.exports = defineConfig({
     //experimentalSessionAndOrigin: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on('before:run', async (details) => {
+        console.log('override before:run');
+        await beforeRunHook(details);
+      });
+
+      on('after:run', async () => {
+        console.log('override after:run');
+        await afterRunHook();
+      });
       require('cypress-mochawesome-reporter/plugin')(on);
       registerAIOTestsPlugin(on,config);
     },
-    baseUrl: 'https://companion-test.cialfo.sg/',
+    baseUrl: 'Add your website base URL here',
     viewportWidth: 1536,
     viewportHeight: 960,
     //chromeWebSecurity: false

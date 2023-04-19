@@ -1,10 +1,11 @@
 {
-  "name": "cypress-automation",
+  "name": "cypress-test-automation",
   "version": "1.0.0",
-  "description": "This is for the cialfo core automation in cypress",
+  "description": "This is for Cypress Web Automation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:dashboard": "npx cypress run --record --key 'add your cypress dashboard key here'"
   },
   "author": "Tayyab Javed",
   "license": "ISC",
