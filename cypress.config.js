@@ -23,7 +23,7 @@ module.exports = defineConfig({
       "cloud": { //Replace with server authentication if using Jira Server
         "apiKey": "your AIO project Key"
       },
-      "jiraProjectId": "Your Jira project ID", // Jira Project ID for Godspeed is 10051 //
+      "jiraProjectId": "Your Jira project ID", // Jira Project ID ##### //
       "cycleDetails": {
         "createNewCycle": false,
         "cycleName": "Cypress Test Cyle Run on AIO",
