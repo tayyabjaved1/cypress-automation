@@ -1,22 +1,33 @@
 {
-  "name": "cypress-test-automation",
-  "version": "1.0.0",
-  "description": "This is for Cypress Web Automation",
-  "main": "index.js",
+  "name": "cypress-playwright-parity-framework",
+  "version": "2.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Cypress + JavaScript E2E framework for the public DemoQA demo — same architecture, scope and conventions as the sibling demoqa-playwright-framework, for a direct Cypress/Playwright comparison.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:dashboard": "npx cypress run --record --key 'add your cypress dashboard key here'"
+    "test": "cypress run",
+    "test:smoke": "cypress run --env grepTags=@smoke",
+    "test:regression": "cypress run --env grepTags=@regression",
+    "cy:open": "cypress open",
+    "lint": "eslint .",
+    "docs:check": "node scripts/check-docs-changes.mjs",
+    "report:allure:generate": "allure generate allure-results --clean -o allure-report",
+    "report:allure:open": "allure open allure-report",
+    "report:allure": "npm run report:allure:generate && npm run report:allure:open"
   },
-  "author": "Tayyab Javed",
-  "license": "ISC",
   "devDependencies": {
-    "@4tw/cypress-drag-drop": "^2.2.3",
-    "cypress": "^10.11.0",
-    "cypress-mochawesome-reporter": "^3.3.0",
-    "cypress-multi-reporters": "^1.6.3"
+    "@cypress/grep": "^4.1.0",
+    "@faker-js/faker": "^9.9.0",
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "@testing-library/cypress": "^10.0.3",
+    "allure-commandline": "^2.46.1",
+    "cypress": "^15.21.1",
+    "cypress-mochawesome-reporter": "^4.0.0",
+    "eslint": "^9.15.0",
+    "eslint-plugin-cypress": "^4.1.0"
   },
-  "dependencies": {
-    "cypress-aiotests-reporter": "^1.0.5",
-    "cypress-iframe": "^1.0.1"
+  "allowScripts": {
+    "fsevents@2.3.2": true,
+    "cypress@15.21.1": true
   }
 }

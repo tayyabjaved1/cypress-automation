@@ -1,58 +1,49 @@
-const { defineConfig } = require("cypress");
-const { registerAIOTestsPlugin } = require('cypress-aiotests-reporter/src')
-const { beforeRunHook, afterRunHook } = require('cypress-mochawesome-reporter/lib');
+const { defineConfig } = require('cypress');
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 module.exports = defineConfig({
-  projectId: 'add cypress dashboard project ID',
+  e2e: {
+    baseUrl: process.env.BASE_URL || 'https://demoqa.com',
+    viewportWidth: 1366,
+    viewportHeight: 900,
+    specPattern: 'cypress/e2e/**/*.cy.js',
+    supportFile: 'cypress/support/e2e.js',
+    defaultCommandTimeout: 10_000,
+    retries: { runMode: 2, openMode: 0 },
+    // `Cypress.env()` was removed in Cypress 16 -- `expose` is its replacement
+    // for a non-sensitive, synchronously-readable config value (`cy.env()`
+    // remains for anything secret, since it's a queued command, not a
+    // synchronous read). See docs/CONFIGURATION.md.
+    expose: {
+      API_BASE_URL: process.env.API_BASE_URL || 'https://demoqa.com',
+    },
+    // Node-side config (read inside setupNodeEvents, never in spec code), so
+    // unrelated to the removed/deprecated browser-side `Cypress.env()` API
+    // above. `@shelex/cypress-allure-plugin` writes nothing at all unless
+    // `env.allure` is explicitly true -- verified live: without this, the
+    // plugin registers silently and allure-results/ is simply never created.
+    env: {
+      allure: true,
+    },
+    setupNodeEvents(on, config) {
+      require('@cypress/grep/src/plugin')(config);
+      // Registers its own before:run/after:run hooks internally -- do not
+      // also register them here, or the report merge runs twice and the
+      // second pass fails with "matched no report files" (the first pass
+      // already consumed them).
+      require('cypress-mochawesome-reporter/plugin')(on);
+      allureWriter(on, config);
+
+      return config;
+    },
+  },
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     charts: true,
-    reportDir: "cypress/reports/mochawesome-report",
-    reportPageTitle: 'Test-Automation-Report',
+    reportDir: 'cypress/reports/mochawesome-report',
+    reportPageTitle: 'DemoQA Cypress Report',
     embeddedScreenshots: true,
     inlineAssets: true,
-    saveAllAttempts: false,
-    reportFilename: "[status]_[datetime]-[name]-report",
-    code: false,
-    autoOpen: false,
     overwrite: false,
-  },
-  env: {
-    "aioTests": {
-      "enableReporting": true,
-      "cloud": { //Replace with server authentication if using Jira Server
-        "apiKey": "your AIO project Key"
-      },
-      "jiraProjectId": "Your Jira project ID", // Jira Project ID ##### //
-      "cycleDetails": {
-        "createNewCycle": false,
-        "cycleName": "Cypress Test Cyle Run on AIO",
-        "cycleKey": "Your AIO Cycle ID"
-      },
-      "addNewRun": true,
-      "addAttachmentToFailedCases": true,
-      "createNewRunForRetries": true
-    },
-  },
-  e2e: {
-    //experimentalSessionAndOrigin: true,
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-      on('before:run', async (details) => {
-        console.log('override before:run');
-        await beforeRunHook(details);
-      });
-
-      on('after:run', async () => {
-        console.log('override after:run');
-        await afterRunHook();
-      });
-      require('cypress-mochawesome-reporter/plugin')(on);
-      registerAIOTestsPlugin(on,config);
-    },
-    baseUrl: 'Add your website base URL here',
-    viewportWidth: 1536,
-    viewportHeight: 960,
-    //chromeWebSecurity: false
   },
 });
